@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Withdraw() {
+    const displayData = useSelector((state) => state)
     const local_storage_key = "storedBankData"
     const [amount, setAmount] = useState("")
     const dispatch = useDispatch()
@@ -15,8 +16,10 @@ export default function Withdraw() {
     }, [amount])
     const handleWithdraw = () => {
         dispatch({ type: "WITHDRAW", amount: parseInt(amount) })
-
     }
+
+    console.log(displayData, 'displayData')
+
     return (
         <div className="container">
             <h1 class="display-4">Enter your amount to withdraw</h1>

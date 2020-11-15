@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BLACK_COLOR } from '../common/Colors'
 import { useDispatch, useSelector } from 'react-redux'
 import Modal from 'react-modal';
@@ -17,9 +17,12 @@ export default function Deposit() {
     const dispatch = useDispatch()
     const [displayTime, setDisplayTime] = useState("")
     const [openModal, setOpenmodal] = useState(false)
-    const displayData = useSelector((state) => state)
     const [errorrMessages, setErrorrMessages] = useState("")
     const [successMessage, setSuccessMessage] = useState('')
+    const [ShowViews, setShowViews] = useState("sampe")
+    const displayData = useSelector((state) => state)
+    const [balanceMessage, setBalanceMessage] = useState(false)
+    const [dataAmount, setdataAmount] = useState("")
     const handleDeposit = () => {
         console.log('hi')
         let details = dispatch({ type: "DEPOSIT", amount: parseInt(amount) })
@@ -52,31 +55,69 @@ export default function Deposit() {
         setOpenmodal(false);
     }
 
+    const local_storage_key = "storedBankData"
+
+    useEffect(() => {
+        const storedBankData = JSON.parse(localStorage.getItem(local_storage_key))
+        setAmount(storedBankData)
+    }, [])
+    useEffect(() => {
+        localStorage.setItem(local_storage_key, JSON.stringify(amount))
+    }, [amount])
+    const handleWithdraw = () => {
+        dispatch({ type: "WITHDRAW", amount: parseInt(amount) })
+        setBalanceMessage(true)
+    }
+
     console.log(amount, 'amount')
     return (
         <div className="container">
-            <h1 class="display-4">Enter your amount to deposit</h1>
-            <input type="text"
-                className="form-control"
-                placeholder="Enter Amount"
-                value={amount}
-                onChange={(e) => {
-                    setAmount(e.target.value)
-                    setErrorrMessages('')
-                }}
-            />
-            {successMessage && <div class="alert alert-success mt-3" role="alert">
-                {successMessage}
-            </div>}
-            {errorrMessages && <div class="alert alert-danger mt-3" role="alert">
-                {errorrMessages}
-            </div>}
-            {/* <p> you Deposited  {displayData}</p> */}
-            <div className="btn-wrappers d-flex ">
-                <button className="btn btn-success" onClick={() => setOpenmodal(!openModal)}>Deposit History</button>
-
-                <button className="btn btn-primary ml-4" onClick={handleDeposit} color={BLACK_COLOR}>Deposit</button>
+            <div className="mt-3">
+                <button className="btn btn-info" onClick={() => setShowViews("Deposit")}>Deposit</button>
+                <button className="btn btn-outline-warning ml-3" onClick={() => setShowViews("Withdraw")}>Withdraw</button>
             </div>
+            {ShowViews === 'Withdraw' && <div>
+                <h1 class="display-4">Enter your amount to withdraw</h1>
+                <input type="text"
+                    className="form-control"
+                    placeholder="Enter Amount"
+                    value={dataAmount}
+                    onChange={(e) => setdataAmount(e.target.value)}
+                />
+                <button className="btn btn-primary mt-3W" onClick={handleWithdraw} >Withdraw</button>
+                {balanceMessage && <div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
+                    <strong>You Withdrawed  {dataAmount}</strong> You have remaining :  {amount - dataAmount}.
+                         <button type="button" class="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>}
+
+            </div>}
+            {ShowViews === 'Deposit' && <div>
+                <h1 class="display-4">Enter your amount to deposit</h1>
+                <input type="text"
+                    className="form-control"
+                    placeholder="Enter Amount"
+                    value={amount}
+                    onChange={(e) => {
+                        setAmount(e.target.value)
+                        setErrorrMessages('')
+                    }}
+                />
+                {successMessage && <div class="alert alert-success mt-3" role="alert">
+                    {successMessage}
+                </div>}
+                {errorrMessages && <div class="alert alert-danger mt-3" role="alert">
+                    {errorrMessages}
+                </div>}
+                <div className="btn-wrappers d-flex ">
+                    <button className="btn btn-success" onClick={() => setOpenmodal(!openModal)}>Deposit History</button>
+
+                    <button className="btn btn-primary ml-4" onClick={handleDeposit} color={BLACK_COLOR}>Deposit</button>
+                </div>
+            </div>
+            }
+
 
             <Modal
                 isOpen={openModal}

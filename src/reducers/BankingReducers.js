@@ -8,6 +8,7 @@ export const BankingReducers = (state = initialState, action) => {
 
         case "WITHDRAW":
             return state - action.amount;
+
         case "COLLECT_INTEREST":
             return state * 1.03;
         case "DELETE_ACCOUNT":
@@ -32,6 +33,7 @@ const withdraw = {
     amount: '300'
 
 }
+console.log(withdraw)
 
 const collectInteres = {
     type: 'COLLECT_INTEREST'

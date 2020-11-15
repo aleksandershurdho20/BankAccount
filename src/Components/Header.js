@@ -18,7 +18,7 @@ export default function Header() {
                             <a class="nav-link" href="/Account/Deposit">Deposit</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Account/Withdraw">Withdraw</a>
+                            <a class="nav-link  disabled" href="/Account/Withdraw">Withdraw</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/Account/ChangeAccount">Change account type</a>
