@@ -19,17 +19,22 @@ export default function Deposit() {
     const [openModal, setOpenmodal] = useState(false)
     const displayData = useSelector((state) => state)
     const [errorrMessages, setErrorrMessages] = useState("")
+    const [successMessage, setSuccessMessage] = useState('')
     const handleDeposit = () => {
         console.log('hi')
         let details = dispatch({ type: "DEPOSIT", amount: parseInt(amount) })
-        if (details) {
+        console.log(details.amount !== null)
+        console.log(details, 'details')
+        if (details.amount) {
+
             let time = new Date();
             let dateTodisplay = time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate();
             setDisplayTime(dateTodisplay)
             console.log(dateTodisplay, 'dateTodisplay')
+            setSuccessMessage(`You Deposited ${details.amount}`)
 
         }
-        if (!displayData) {
+        else {
 
             setErrorrMessages("Please Enter AMOUNT!")
         }
@@ -60,6 +65,9 @@ export default function Deposit() {
                     setErrorrMessages('')
                 }}
             />
+            {successMessage && <div class="alert alert-success mt-3" role="alert">
+                {successMessage}
+            </div>}
             {errorrMessages && <div class="alert alert-danger mt-3" role="alert">
                 {errorrMessages}
             </div>}
