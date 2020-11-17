@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { BLACK_COLOR } from '../common/Colors'
 import { useDispatch, useSelector } from 'react-redux'
 import Modal from 'react-modal';
+import { deposit, Withdraw } from '../actions/BankingActions'
+
 export default function Deposit() {
     const customStyles = {
         content: {
@@ -65,8 +67,11 @@ export default function Deposit() {
         localStorage.setItem(local_storage_key, JSON.stringify(amount))
     }, [amount])
     const handleWithdraw = () => {
-        dispatch({ type: "WITHDRAW", amount: parseInt(amount) })
-        setBalanceMessage(true)
+        if (dataAmount.length !== 0) {
+            dispatch({ type: "WITHDRAW", amount: parseInt(amount) })
+            setBalanceMessage(true)
+        }
+
     }
 
     console.log(amount, 'amount')
@@ -84,6 +89,8 @@ export default function Deposit() {
                     value={dataAmount}
                     onChange={(e) => setdataAmount(e.target.value)}
                 />
+
+
                 <button className="btn btn-primary mt-3W" onClick={handleWithdraw} >Withdraw</button>
                 {balanceMessage && <div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
                     <strong>You Withdrawed  {dataAmount}</strong> You have remaining :  {amount - dataAmount}.

@@ -23,22 +23,22 @@ export const BankingReducers = (state = initialState, action) => {
 
 
 //Actions
-const deposit = {
-    type: "DEPOSIT",
-    amount: '500'
-}
-console.log(deposit, 'depozita')
-const withdraw = {
-    type: "WITHDRAW",
-    amount: '300'
+// const deposit = {
+//     type: "DEPOSIT",
+//     amount: '500'
+// }
+// console.log(deposit, 'depozita')
+// const withdraw = {
+//     type: "WITHDRAW",
+//     amount: '300'
 
-}
-console.log(withdraw)
+// }
+// console.log(withdraw)
 
-const collectInteres = {
-    type: 'COLLECT_INTEREST'
-}
+//  const collectInteres = {
+//     type: 'COLLECT_INTEREST'
+// }
 
-const deleteAccount = {
-    type: 'DELETE'
-}
+// const deleteAccount = {
+//     type: 'DELETE'
+// }

@@ -1,24 +1,25 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { collectInterest } from '../actions/BankingActions'
 export default function CollectInterest() {
     const [amount, setAmount] = useState("")
     const dispatch = useDispatch()
+    const displayData = useSelector((state) => state)
 
-    const handleWithdraw = () => {
-        dispatch({ type: "WITHDRAW", amount: parseInt(amount) })
+
+    const handleInteres = () => {
+        dispatch(collectInterest());
+        console.log("done")
+
 
     }
+    let data = localStorage.getItem('storedBankData')
+    console.log('data here')
     return (
         <div className="container">
-            <h1 class="display-4">Enter your amount to withdraw</h1>
-            <input type="text"
-                className="form-control"
-                placeholder="Enter Amount"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-            />
-            <button className="btn btn-primary" onClick={handleWithdraw} >Withdraw</button>
+            <h1 class="display-4">Interesi ktu {data}</h1>
+
+            <button className="btn btn-primary" onClick={handleInteres} >Withdraw</button>
         </div>
     )
 }
