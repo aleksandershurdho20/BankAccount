@@ -5,11 +5,13 @@ import Header from './Components/Header'
 import Deposit from './Components/Deposit'
 import Footer from './Components/Footer'
 import Routes from './Components/Routes'
+
 function App() {
   return (
     <div >
-      <Header />
-      <Routes />
+      {/* <Header /> */}
+      <Deposit />
+      {/* <Routes /> */}
       <Footer />
     </div>
   );

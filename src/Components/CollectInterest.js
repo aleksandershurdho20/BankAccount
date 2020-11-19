@@ -7,17 +7,19 @@ export default function CollectInterest() {
     const displayData = useSelector((state) => state)
 
 
+
     const handleInteres = () => {
-        dispatch(collectInterest());
-        console.log("done")
+        let dati = dispatch({ type: 'COLLECT_INTEREST' });
+        // console.log(collectInterest(), 'collect')
 
 
     }
+
     let data = localStorage.getItem('storedBankData')
     console.log('data here')
     return (
         <div className="container">
-            <h1 class="display-4">Interesi ktu {data}</h1>
+            <h1 class="display-4">Interesi ktu {displayData}</h1>
 
             <button className="btn btn-primary" onClick={handleInteres} >Withdraw</button>
         </div>

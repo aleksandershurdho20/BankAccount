@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { BLACK_COLOR } from '../common/Colors'
 import { useDispatch, useSelector } from 'react-redux'
 import Modal from 'react-modal';
-import { deposit, Withdraw } from '../actions/BankingActions'
-
+import { deposit, } from '../actions/BankingActions'
+import Withdraw from './Withdraw'
+import DeleteAccount from './DeleteAccount';
 export default function Deposit() {
     const customStyles = {
         content: {
@@ -73,33 +74,52 @@ export default function Deposit() {
         }
 
     }
+    const WithdrawAmount = (e) => {
+        setdataAmount(e.target.value)
+    }
 
     console.log(amount, 'amount')
     return (
         <div className="container">
-            <div className="mt-3">
-                <button className="btn btn-info" onClick={() => setShowViews("Deposit")}>Deposit</button>
-                <button className="btn btn-outline-warning ml-3" onClick={() => setShowViews("Withdraw")}>Withdraw</button>
-            </div>
-            {ShowViews === 'Withdraw' && <div>
-                <h1 class="display-4">Enter your amount to withdraw</h1>
-                <input type="text"
-                    className="form-control"
-                    placeholder="Enter Amount"
-                    value={dataAmount}
-                    onChange={(e) => setdataAmount(e.target.value)}
-                />
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Bank Account</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onClick={() => setShowViews("Deposit")} >Deposit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link  " onClick={() => setShowViews("Withdraw")}>Withdraw</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" >Change account type</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " onClick={() => setShowViews("Delete")} >Delete Account</a>
+                        </li>
 
-                <button className="btn btn-primary mt-3W" onClick={handleWithdraw} >Withdraw</button>
-                {balanceMessage && <div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
-                    <strong>You Withdrawed  {dataAmount}</strong> You have remaining :  {amount - dataAmount}.
-                         <button type="button" class="close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>}
+                        <li class="nav-item">
+                            <a class="nav-link " >Collect Interest</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                    </form>
+                </div>
+            </nav>
 
-            </div>}
+            {ShowViews === 'Withdraw' && <Withdraw amount={amount}
+                dataAmount={dataAmount}
+                handleWithdraw={handleWithdraw}
+                WithdrawAmount={WithdrawAmount}
+                balanceMessage={balanceMessage} />}
             {ShowViews === 'Deposit' && <div>
                 <h1 class="display-4">Enter your amount to deposit</h1>
                 <input type="text"
@@ -124,7 +144,7 @@ export default function Deposit() {
                 </div>
             </div>
             }
-
+            {ShowViews === 'Delete' && <DeleteAccount />}
 
             <Modal
                 isOpen={openModal}
@@ -141,6 +161,8 @@ export default function Deposit() {
 
                 <button onClick={closeModal}>close</button>
             </Modal>
+            <button onClick={() => dispatch({ type: "COLLECT_INTEREST" })}>Dispatch</button>
+            after dispatch {displayData}
         </div>
     )
 }

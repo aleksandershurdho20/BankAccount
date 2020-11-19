@@ -1,35 +1,24 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
 
-export default function Withdraw() {
-    const displayData = useSelector((state) => state)
-    const local_storage_key = "storedBankData"
-    const [amount, setAmount] = useState("")
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        const storedBankData = JSON.parse(localStorage.getItem(local_storage_key))
-        setAmount(storedBankData)
-    }, [])
-    useEffect(() => {
-        localStorage.setItem(local_storage_key, JSON.stringify(amount))
-    }, [amount])
-    const handleWithdraw = () => {
-        dispatch({ type: "WITHDRAW", amount: parseInt(amount) })
-    }
-
-    console.log(displayData, 'displayData')
-
+export default function Withdraw({ dataAmount, amount, handleWithdraw, balanceMessage, WithdrawAmount }) {
     return (
-        <div className="container">
+        <div>
             <h1 class="display-4">Enter your amount to withdraw</h1>
             <input type="text"
                 className="form-control"
                 placeholder="Enter Amount"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                value={dataAmount}
+                onChange={WithdrawAmount}
             />
-            <button className="btn btn-primary" onClick={handleWithdraw} >Withdraw</button>
+
+
+            <button className="btn btn-primary mt-3W" onClick={handleWithdraw} >Withdraw</button>
+            {balanceMessage && <div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
+                <strong>You Withdrawed  {dataAmount}</strong> You have remaining :  {amount - dataAmount}.
+                         <button type="button" class="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>}
         </div>
     )
 }
