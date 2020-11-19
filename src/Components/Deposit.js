@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BLACK_COLOR } from '../common/Colors'
 import { useDispatch, useSelector } from 'react-redux'
 import Modal from 'react-modal';
-import { deposit, } from '../actions/BankingActions'
+import { Delete, } from '../actions/BankingActions'
 import Withdraw from './Withdraw'
 import DeleteAccount from './DeleteAccount';
 export default function Deposit() {
@@ -77,7 +77,15 @@ export default function Deposit() {
     const WithdrawAmount = (e) => {
         setdataAmount(e.target.value)
     }
+    const DeleteBankAccount = () => {
+        dispatch({
+            type: 'DELETE'
+        })
+        alert('Account has been succesfully deleted')
+        window.location.reload();
 
+        console.log('fired')
+    }
     console.log(amount, 'amount')
     return (
         <div className="container">
@@ -144,7 +152,7 @@ export default function Deposit() {
                 </div>
             </div>
             }
-            {ShowViews === 'Delete' && <DeleteAccount />}
+            {ShowViews === 'Delete' && <DeleteAccount DeleteBankAccount={DeleteBankAccount} />}
 
             <Modal
                 isOpen={openModal}
