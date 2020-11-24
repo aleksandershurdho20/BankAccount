@@ -13,7 +13,9 @@ export const BankingReducers = (state = initialState, action) => {
             console.log(action.type, 'ac')
             return state * 1.03;
         case "DELETE_ACCOUNT":
-            return 0
+            return 0;
+
+
         // if the cases dont match return old state
         default: return state
 

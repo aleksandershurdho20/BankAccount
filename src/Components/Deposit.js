@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { Delete, } from '../actions/BankingActions'
 import Withdraw from './Withdraw'
 import DeleteAccount from './DeleteAccount';
+import CollectInterest from './CollectInterest'
 export default function Deposit() {
     const customStyles = {
         content: {
@@ -58,15 +59,15 @@ export default function Deposit() {
         setOpenmodal(false);
     }
 
-    const local_storage_key = "storedBankData"
+    // const local_storage_key = "storedBankData"
 
-    useEffect(() => {
-        const storedBankData = JSON.parse(localStorage.getItem(local_storage_key))
-        setAmount(storedBankData)
-    }, [])
-    useEffect(() => {
-        localStorage.setItem(local_storage_key, JSON.stringify(amount))
-    }, [amount])
+    // useEffect(() => {
+    //     const storedBankData = JSON.parse(localStorage.getItem(local_storage_key))
+    //     setAmount(storedBankData)
+    // }, [])
+    // useEffect(() => {
+    //     localStorage.setItem(local_storage_key, JSON.stringify(amount))
+    // }, [amount])
     const handleWithdraw = () => {
         if (dataAmount.length !== 0) {
             dispatch({ type: "WITHDRAW", amount: parseInt(amount) })
@@ -79,7 +80,7 @@ export default function Deposit() {
     }
     const DeleteBankAccount = () => {
         dispatch({
-            type: 'DELETE'
+            type: 'DELETE_ACCOUNT'
         })
         alert('Account has been succesfully deleted')
         window.location.reload();
@@ -87,6 +88,9 @@ export default function Deposit() {
         console.log('fired')
     }
     console.log(amount, 'amount')
+    const handleInteres = () => {
+        dispatch({ type: "COLLECT_INTEREST" })
+    }
     return (
         <div className="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -114,7 +118,7 @@ export default function Deposit() {
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link " >Collect Interest</a>
+                            <a class="nav-link " onClick={() => setShowViews("CollectInterest")}  >Collect Interest</a>
                         </li>
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
@@ -153,7 +157,7 @@ export default function Deposit() {
             </div>
             }
             {ShowViews === 'Delete' && <DeleteAccount DeleteBankAccount={DeleteBankAccount} />}
-
+            {ShowViews === 'CollectInterest' && <CollectInterest handleInteres={handleInteres} displayData={displayData} />}
             <Modal
                 isOpen={openModal}
                 onAfterOpen={afterOpenModal}
@@ -161,16 +165,22 @@ export default function Deposit() {
                 style={customStyles}
                 contentLabel="Example Modal"
             >
-                <div>
-                    <h4>Your Deposit History</h4>
-                    <h2>{displayTime}</h2>
-
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <h4>Your Deposit History</h4>
+                            <h2>{displayTime}</h2>
+                        </div>
+                        <div className="col-md-6">
+                            <h4>Your Deposit Amount</h4>
+                            <h2>{amount}</h2>
+                        </div>
+                    </div>
                 </div>
 
-                <button onClick={closeModal}>close</button>
+                <button onClick={closeModal} className="btn btn-success">close</button>
             </Modal>
-            <button onClick={() => dispatch({ type: "COLLECT_INTEREST" })}>Dispatch</button>
-            after dispatch {displayData}
+
         </div>
     )
 }

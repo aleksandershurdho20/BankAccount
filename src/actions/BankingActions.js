@@ -16,7 +16,7 @@ const collectInterest = () => {
 }
 const Delete = () => {
     return {
-        type: 'DELETE'
+        type: 'DELETE_ACCOUNT'
     };
 
 

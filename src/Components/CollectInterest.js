@@ -1,27 +1,27 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { collectInterest } from '../actions/BankingActions'
-export default function CollectInterest() {
+export default function CollectInterest({ handleInteres, displayData }) {
     const [amount, setAmount] = useState("")
     const dispatch = useDispatch()
-    const displayData = useSelector((state) => state)
 
 
 
-    const handleInteres = () => {
-        let dati = dispatch({ type: 'COLLECT_INTEREST' });
-        // console.log(collectInterest(), 'collect')
 
-
-    }
 
     let data = localStorage.getItem('storedBankData')
     console.log('data here')
     return (
         <div className="container">
-            <h1 class="display-4">Interesi ktu {displayData}</h1>
+            <div class="card mt-5 mb-5">
+                <h5 class="card-header">Collect Interest</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Total Interes</h5>
+                    <p class="card-text">{displayData}</p>
+                    <a href="#" class="btn btn-primary" onClick={handleInteres}>Collect</a>
+                </div>
+            </div>
 
-            <button className="btn btn-primary" onClick={handleInteres} >Withdraw</button>
         </div>
     )
 }
