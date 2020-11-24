@@ -149,7 +149,7 @@ export default function Deposit() {
                 {errorrMessages && <div class="alert alert-danger mt-3" role="alert">
                     {errorrMessages}
                 </div>}
-                <div className="btn-wrappers d-flex ">
+                <div className="btn-wrappers d-flex mb-5 mt-5">
                     <button className="btn btn-success" onClick={() => setOpenmodal(!openModal)}>Deposit History</button>
 
                     <button className="btn btn-primary ml-4" onClick={handleDeposit} color={BLACK_COLOR}>Deposit</button>

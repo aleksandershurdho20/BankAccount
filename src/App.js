@@ -11,8 +11,8 @@ function App() {
     <div >
       {/* <Header /> */}
       <Deposit />
-      {/* <Routes /> */}
       <Footer />
+      {/* <Routes /> */}
     </div>
   );
 }
